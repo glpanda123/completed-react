@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import './ExpenseForm.css';
 
-function ExpenseForm(params) {
+function ExpenseForm(props) {
   const [title, setTitle] = useState('new expense');
-  const [amount, setAmount] = useState(1000);
+  const [amount, setAmount] = useState('1000');
   const [date, setDate] = useState('');
 
   // const [userInput, setUserInput] = useState({
@@ -32,8 +32,23 @@ function ExpenseForm(params) {
     // });
     setDate(event.target.value);
   }
+
+  function submitHandler(event) {
+    // prevent the event sent form value to server when click submit
+    event.preventDefault();
+    const expenseData = {
+      title,
+      amount,
+      date: new Date(date),
+    };
+    props.saveExpenseData(expenseData);
+    setTitle('');
+    setAmount('');
+    setDate('');
+  }
+
   return (
-    <form>
+    <form onSubmit={submitHandler}>
       <div className='new-expense__controls'>
         <div className='new-expense__control'>
           <label>Title</label>
