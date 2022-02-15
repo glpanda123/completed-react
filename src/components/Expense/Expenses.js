@@ -7,15 +7,18 @@ import './Expenses.css';
 function Expenses(props) {
   const [year, setYear] = useState('2021');
 
-  const selectYearHandler = (selectedYear) => setYear(selectedYear);
+  const selectYearHandler = (selectedYear) => {
+    setYear(selectedYear);
+  };
+
+  const filteredExpense = props.expenses.filter((element) => element.date.getFullYear() === +year);
   return (
     <div>
       <ExpenseFilter onSelectYear={selectYearHandler} year={year}></ExpenseFilter>
       <Card className='expenses'>
-        <ExpenseItem className='App-link' expenseItem={props.expenses[0]}></ExpenseItem>
-        <ExpenseItem className='App-link' expenseItem={props.expenses[1]}></ExpenseItem>
-        <ExpenseItem className='App-link' expenseItem={props.expenses[2]}></ExpenseItem>
-        <ExpenseItem className='App-link' expenseItem={props.expenses[3]}></ExpenseItem>
+        {filteredExpense.map((expense) => (
+          <ExpenseItem className='App-link' key={expense.id} expenseItem={expense}></ExpenseItem>
+        ))}
       </Card>
     </div>
   );

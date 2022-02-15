@@ -28,7 +28,9 @@ function App() {
   ]);
 
   const onSaveNewExpense = (expenseData) => {
-    // setExpenses([...expenses, expenseData]);
+    setExpenses((preExpenses) => {
+      return [expenseData, ...preExpenses];
+    });
   };
 
   return (
